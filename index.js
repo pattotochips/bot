@@ -28,12 +28,9 @@ client.on('messageCreate', message => {
                 return message.channel.send('Usage: !addreminder <time in minutes> <event description>');
             }
 
-            // Mention the current channel using <#channel_id>
-            const channelMention = `<#${message.channel.id}>`;
-
             const reminderTime = parseInt(time, 10) * 60000;
             const reminder = setTimeout(() => {
-                message.channel.send(`${channelMention} ${event}`);
+                message.channel.send(`@everyone ${event}`);
                 const userReminders = reminders.get(message.author.id);
                 if (userReminders) {
                     userReminders.splice(userReminders.indexOf(reminder), 1);
@@ -68,15 +65,12 @@ client.on('messageCreate', message => {
 
             const reminderTime = parsedDateTime.getTime() - Date.now();
 
-            // Mention the current channel using <#channel_id>
-            const channelMention = `<#${message.channel.id}>`;
-
             if (reminderTime <= 0) {
                 return message.channel.send('Please provide a future date and time.');
             }
 
             const reminder = setTimeout(() => {
-                message.channel.send(`${channelMention} ${event}`);
+                message.channel.send(`@everyone ${event}`);
                 const userReminders = reminders.get(message.author.id);
                 if (userReminders) {
                     userReminders.splice(userReminders.indexOf(reminder), 1);

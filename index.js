@@ -3,6 +3,7 @@ const client = new Client({ intents: [GatewayIntentBits.Guilds, GatewayIntentBit
 const prefix = '!'; // You can change this to your desired command prefix
 import dotenv from 'dotenv';
 dotenv.config(); // Load the environment variables from the .env file
+import express from 'express';
 
 const reminders = new Map();
 
@@ -94,3 +95,9 @@ client.on('messageCreate', message => {
 });
 
 client.login(token);
+
+// Minimal Express server to keep Render Web Service alive
+const app = express();
+const PORT = process.env.PORT || 3000;
+app.get('/', (req, res) => res.send('Bot is running!'));
+app.listen(PORT, () => console.log(`Web server running on port ${PORT}`));
